@@ -1,4 +1,4 @@
-defmodule Gitly.Net do
+defmodule Gitly.Utils.Net do
   @moduledoc """
     A module to check if the user is online or offline.
   """
@@ -8,7 +8,7 @@ defmodule Gitly.Net do
 
     ## Examples
 
-        iex> Gitly.Net.is_offline?
+        iex> Gitly.Utils.Net.is_offline?
         false
   """
   def is_offline? do
@@ -23,7 +23,7 @@ defmodule Gitly.Net do
 
     ## Examples
 
-        iex> Gitly.Net.is_online?
+        iex> Gitly.Utils.Net.is_online?
         true
   """
   def is_online?, do: not is_offline?()
