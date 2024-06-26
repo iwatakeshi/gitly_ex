@@ -24,3 +24,5 @@ gitly_ex-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+test/utils/archive/fixtures/master/

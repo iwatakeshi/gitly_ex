@@ -21,25 +21,44 @@ defmodule Gitly.Utils.Archive do
   end
 
   @spec create_archive_path(map(), Gitly.opts()) :: Path.t()
-  def create_archive_path(%{host: host, path: path, ref: ref}, opts \\ []) do
+  def create_archive_path(%{host: host, owner: owner, repo: repo, ref: ref}, opts \\ []) do
     with root <- Keyword.get(opts, :root, FS.root_path()),
          format <- Keyword.get(opts, :format, :tar_gz),
          provider = host |> String.split(".") |> List.first(),
          fmt = ArchiveType.from_type(format),
-         archive_path = [root, provider, path, ref <> fmt] |> Path.join() |> Path.expand() do
+         archive_path = [root, provider, owner, repo, ref <> fmt] |> Path.join() |> Path.expand() do
       archive_path
     end
   end
 
+  @spec download(String.t(), Path.t()) :: {:ok, Path.t()} | {:error, String.t()}
+  def download(url, path) do
+    try do
+      with :ok <- FS.ensure_file_exists(path),
+           opts = [into: stream_to_file!(path), redirect_log_level: false, decode_body: false],
+           %Req.Response{status: 200} <- Req.get!(url, opts) do
+        {:ok, path}
+      else
+        %Req.Response{status: code} ->
+          File.rm(path)
+          {:error, "Failed to download archive: #{code}"}
+
+        {:error, reason} ->
+          {:error, reason}
+      end
+    rescue
+      e in RuntimeError -> {:error, e.message}
+      e -> {:error, "Failed to download archive: #{inspect(e)}"}
+    end
+  end
+
   @spec extract(Path.t(), Path.t(), Gitly.opts()) :: {:ok, Path.t()} | {:error, String.t()}
-  def extract(path, dest, opts) do
+  def extract(path, dest, opts \\ []) do
     force = Keyword.get(opts, :force, false)
     overwrite = Keyword.get(opts, :overwrite, false)
     with {:ok, temp_dir} <- Briefly.create(directory: true),
          {:ok, _} <- Extractor.extract(path, temp_dir),
-         [extracted_dir] <- File.ls!(temp_dir),
-         IO.inspect(extracted_dir, label: "extracted_dir"),
-         IO.inspect(dest, label: "dest"),
+        #  [extracted_dir] <- File.ls!(temp_dir),
          {:ok, _} <-
            FS.maybe_rm_rf(
              dest,
@@ -60,26 +79,6 @@ defmodule Gitly.Utils.Archive do
     Briefly.cleanup()
   end
 
-  @spec download(String.t(), Path.t()) :: {:ok, Path.t()} | {:error, String.t()}
-  def download(url, path) do
-    try do
-      with :ok <- FS.ensure_file_exists(path),
-           opts = [into: stream_to_file!(path), redirect_log_level: false, decode_body: false],
-           %Req.Response{status: 200} <- Req.get!(url, opts),
-           IO.inspect(File.exists?(path), label: "file_exists") do
-        {:ok, path}
-      else
-        %Req.Response{status: code} ->
-          {:error, "Failed to download archive: #{code}"}
-
-        {:error, reason} ->
-          {:error, reason}
-      end
-    rescue
-      e in RuntimeError -> {:error, e.message}
-      e -> {:error, "Failed to download archive: #{inspect(e)}"}
-    end
-  end
 
   defp stream_to_file!(path) do
     case File.open(path, [:write, :binary]) do
