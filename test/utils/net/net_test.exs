@@ -19,15 +19,15 @@ defmodule Gitly.Utils.NetTest do
   end
 
   test "is_online?/0 returns true when mocked to be online" do
-    # Gitly.Utils.NetMock
-    # |> expect(:is_online?, fn -> true end)
+    Gitly.Utils.NetMock
+    |> expect(:is_online?, fn -> true end)
 
     assert Gitly.Utils.NetMock.is_online?() == true
   end
 
   test "is_online?/0 returns false when mocked to be offline" do
-    # Gitly.Utils.NetMock
-    # |> expect(:is_online?, fn -> false end)
+    Gitly.Utils.NetMock
+    |> expect(:is_online?, fn -> false end)
 
     assert Gitly.Utils.NetMock.is_online?() == false
   end

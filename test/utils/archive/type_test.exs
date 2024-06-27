@@ -74,4 +74,14 @@ defmodule GitlyUtilsArchiveTypeTest do
     assert Gitly.Utils.Archive.Type.trim_leading_dot("zip") == "zip"
   end
 
+  test "trim_extension" do
+    assert Gitly.Utils.Archive.Type.trim_extension("file.zip") == "file"
+    assert Gitly.Utils.Archive.Type.trim_extension("file.tar") == "file"
+    assert Gitly.Utils.Archive.Type.trim_extension("file.tar.gz") == "file"
+    assert Gitly.Utils.Archive.Type.trim_extension("file.tgz") == "file"
+    assert Gitly.Utils.Archive.Type.trim_extension("file.tar.bz2") == "file"
+    assert Gitly.Utils.Archive.Type.trim_extension("file.tar.xz") == "file"
+    assert Gitly.Utils.Archive.Type.trim_extension("file") == "file"
+  end
+
 end

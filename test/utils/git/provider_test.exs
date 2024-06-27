@@ -32,5 +32,7 @@ defmodule GitlyUtilsGitProviderTest do
              ".tar.gz"
            ) ==
              "https://bitbucket.org/owner/repo/get/ref.tar.gz"
+
+    assert Gitly.Utils.Git.Provider.build_url(:unknown, %{}, ".tar.gz") ==  :error
   end
 end
