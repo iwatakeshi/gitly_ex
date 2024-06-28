@@ -34,7 +34,10 @@ defmodule Gitly.MixProject do
       {:briefly, "~> 0.5.1"},
       {:mox, "~> 1.1", only: :test},
       {:excoveralls, "~> 0.18.1", only: :test},
-      {:plug, "~> 1.16", only: :test }
+      {:plug, "~> 1.16", only: :test },
+      {:ex_doc, "~> 0.34.1", only: :dev, runtime: false},
+      {:mix_test_watch, "~> 1.2", only: [:dev, :test], runtime: false}
+
     ]
   end
 
