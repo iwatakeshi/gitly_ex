@@ -1,12 +1,15 @@
 defmodule Gitly.MixProject do
   use Mix.Project
 
-  def project do
+  @version "0.1.0"
+  @source_url "https://github.com/iwatakeshi/gitly_ex"
+
+  def(project) do
     [
       name: "Gitly",
       app: :gitly,
-      version: "0.1.0",
-      source_url: "https://github.com/iwatakeshi/gitly_ex",
+      version: @version,
+      source_url: @source_url,
       elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,
@@ -18,11 +21,13 @@ defmodule Gitly.MixProject do
         "coveralls.detail": :test,
         "coveralls.post": :test,
         "coveralls.html": :test,
-        "test.watch": :test,
+        "test.watch": :test
       ],
       docs: [
-        main: "Gitly",
-        extras: ["README.md", "LICENSE"]
+        main: "readme",
+        source_url: @source_url,
+        source_ref: "v#{@version}",
+        extras: ["README.md", "LICENSE", "CHANGELOG.md"],
       ]
     ]
   end
@@ -41,10 +46,9 @@ defmodule Gitly.MixProject do
       {:briefly, "~> 0.5.1"},
       {:mox, "~> 1.1", only: :test},
       {:excoveralls, "~> 0.18.1", only: :test},
-      {:plug, "~> 1.16", only: :test },
+      {:plug, "~> 1.16", only: :test},
       {:ex_doc, "~> 0.34.1", only: :dev, runtime: false},
       {:mix_test_watch, "~> 1.2", only: [:dev, :test], runtime: false}
-
     ]
   end
 
