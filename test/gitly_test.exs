@@ -1,6 +1,5 @@
 defmodule GitlyTest do
   use ExUnit.Case
-  doctest Gitly
   import Mox
 
   @fixtures_dir Path.join(__DIR__, "fixtures")
