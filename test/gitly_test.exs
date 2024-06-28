@@ -50,7 +50,12 @@ defmodule GitlyTest do
     end
 
     test "gitly/3 downloads and extracts a repository using a different ref" do
-      {:ok, path} = Gitly.gitly("iwatakeshi/gitly", ref: "master", root: Path.join(@gitly_dir, ["online", "3"]))
+      {:ok, path} =
+        Gitly.gitly("iwatakeshi/gitly",
+          ref: "master",
+          root: Path.join(@gitly_dir, ["online", "3"])
+        )
+
       assert File.exists?(path)
       assert File.dir?(path)
       assert File.exists?(Path.join(path, "README.md"))
@@ -92,7 +97,6 @@ defmodule GitlyTest do
       assert {:error, _} = Gitly.gitly("uncached/repo", root: @gitly_dir)
     end
 
-    @tag :only
     test "gitly/2 with force option returns error when offline" do
       # Req.Test.stub(ReqStub, fn conn ->
       #   Req.Test.transport_error(conn, :econnrefused)

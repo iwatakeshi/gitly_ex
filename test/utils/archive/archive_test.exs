@@ -36,7 +36,6 @@ defmodule GitlyUtilsArchiveTest do
              "https://github.com/owner/repo/archive/ref.tar.gz"
   end
 
-  @tag :download
   test "download" do
     # Test successful download
     # dest = @download_dir
@@ -58,7 +57,6 @@ defmodule GitlyUtilsArchiveTest do
     end)
   end
 
-  @tag :extract
   test "extract/2" do
     # Download the archive
 
