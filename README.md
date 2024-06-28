@@ -1,6 +1,3 @@
-Certainly! Here's a rewritten README based on the information you've provided about the Gitly module:
-
-```markdown
 # Gitly
 
 Gitly is an Elixir library for easily downloading and extracting Git repositories from various hosting services.
@@ -97,6 +94,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-```
-
-This README provides an overview of the Gitly library, its features, installation instructions, basic usage examples, available options, and information about documentation and contributing. You may want to adjust specific details like version numbers, add more examples, or include any additional information that's relevant to your project.
