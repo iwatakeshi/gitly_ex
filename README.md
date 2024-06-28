@@ -1,6 +1,6 @@
 # Gitly
 
-Gitly is an Elixir library for easily downloading and extracting Git repositories from various hosting services.
+An Elixir library for easily downloading and extracting Git repositories from various hosting services.
 
 ## Features
 
