@@ -4,10 +4,11 @@ Gitly is an Elixir library for easily downloading and extracting Git repositorie
 
 ## Features
 
-- Download repositories from popular Git hosting services
+- Download repositories from popular Git hosts
 - Extract downloaded archives
 - Flexible options for caching, retrying, and formatting
-- Support for various archive formats (zip, tar, tar.gz, tgz)
+- Support for various archive formats (zip, tar, tar.gz, tgz) if supported by the provider
+- Support for various hosts (GitHub, GitLab, BitBucket)
 
 ## Installation
 
@@ -36,6 +37,14 @@ import Gitly, only: [gitly: 1, gitly: 2]
 
 This will download the repository and return the path to the extracted contents.
 
+The following inputs are supported:
+
+- `owner/repo`
+- `https://host.com/owner/repo`
+- `https://host.com/owner/repo.git`
+- `host.com/owner/repo`
+- `host:owner/repo`
+
 ### Download Only
 
 If you only want to download the repository without extracting:
@@ -51,14 +60,14 @@ To extract an already downloaded archive:
 
 ```elixir
 import Gitly, only: [extract: 1, extract: 2]
-{:ok, extracted_path} = Gitly.extract("/path/to/archive.zip")
+{:ok, extracted_path} = extract("/path/to/archive.zip")
 ```
 
 Or to specify a destination:
 
 ```elixir
 import Gitly, only: [extract: 1, extract: 2]
-{:ok, extracted_path} = Gitly.extract("/path/to/archive.zip", "/path/to/destination")
+{:ok, extracted_path} = extract("/path/to/archive.zip", "/path/to/destination")
 ```
 
 ## Options
@@ -80,7 +89,7 @@ Example with options:
 
 ```elixir
 import Gitly, only: [gitly: 1, gitly: 2]
-Gitly.gitly("username/repo", force: true, format: :zip, ref: "main")
+gitly("username/repo", force: true, format: :zip, ref: "main")
 ```
 
 ## Documentation
