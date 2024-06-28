@@ -1,8 +1,8 @@
 import Config
 
-config :gitly_ex,
+config :gitly,
   net_module: Gitly.Utils.NetMock
 
-# config :gitly_ex, archive_module_options: [
+# config :gitly, archive_module_options: [
 #   plug: {Req.Test, ReqStub},
 # ]

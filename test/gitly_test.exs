@@ -17,11 +17,11 @@ defmodule GitlyTest do
   describe "online" do
     @describetag :gitly_online
     setup do
-      previous_net_module = Application.get_env(:gitly_ex, :net_module)
-      Application.put_env(:gitly_ex, :net_module, Gitly.Utils.Net.INet)
+      previous_net_module = Application.get_env(:gitly, :net_module)
+      Application.put_env(:gitly, :net_module, Gitly.Utils.Net.INet)
 
       on_exit(fn ->
-        Application.put_env(:gitly_ex, :net_module, previous_net_module)
+        Application.put_env(:gitly, :net_module, previous_net_module)
       end)
     end
 
@@ -57,20 +57,20 @@ defmodule GitlyTest do
       Mox.stub(Gitly.Utils.NetMock, :is_online?, fn -> false end)
       Mox.stub(Gitly.Utils.NetMock, :is_offline?, fn -> true end)
 
-      previous_net_module = Application.get_env(:gitly_ex, :net_module)
-      Application.put_env(:gitly_ex, :net_module, Gitly.Utils.NetMock)
+      previous_net_module = Application.get_env(:gitly, :net_module)
+      Application.put_env(:gitly, :net_module, Gitly.Utils.NetMock)
 
       on_exit(fn ->
-        Application.put_env(:gitly_ex, :net_module, previous_net_module)
+        Application.put_env(:gitly, :net_module, previous_net_module)
       end)
     end
 
     test "gitly/2 uses cached repository when offline" do
       root_dir = Path.join(@gitly_dir, ["offline", "1"])
       # First, download the repository while online
-      Application.put_env(:gitly_ex, :net_module, Gitly.Utils.Net.INet)
+      Application.put_env(:gitly, :net_module, Gitly.Utils.Net.INet)
       {:ok, online_path} = Gitly.gitly(@test_repo, root: root_dir)
-      Application.put_env(:gitly_ex, :net_module, Gitly.Utils.NetMock)
+      Application.put_env(:gitly, :net_module, Gitly.Utils.NetMock)
 
       # Now try to get it while offline
       {:ok, offline_path} = Gitly.gitly(@test_repo, root: root_dir)

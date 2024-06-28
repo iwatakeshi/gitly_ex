@@ -1,4 +1,4 @@
 import Config
 
-config :gitly_ex,
+config :gitly,
   net_module: Gitly.Utils.Net.INet

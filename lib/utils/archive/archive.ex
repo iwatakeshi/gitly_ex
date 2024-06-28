@@ -4,7 +4,7 @@ defmodule Gitly.Utils.Archive do
   alias Gitly.Utils.Git.Provider, as: GitProvider
   alias Gitly.Utils.FS, as: FS
 
-  # @archive_module_opts Application.compile_env(:gitly_ex, :archive_module_options, [])
+  # @archive_module_opts Application.compile_env(:gitly, :archive_module_options, [])
   @moduledoc """
   A module to handle archive operations.
   """

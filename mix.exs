@@ -3,7 +3,7 @@ defmodule Gitly.MixProject do
 
   def project do
     [
-      app: :gitly_ex,
+      app: :gitly,
       version: "0.1.0",
       elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),

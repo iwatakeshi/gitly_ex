@@ -6,11 +6,11 @@ defmodule GitlyTaskBuilderTest do
 
   describe "online (using real INet implementation)" do
     setup do
-      previous_net_module = Application.get_env(:gitly_ex, :net_module)
-      Application.put_env(:gitly_ex, :net_module, Gitly.Utils.Net.INet)
+      previous_net_module = Application.get_env(:gitly, :net_module)
+      Application.put_env(:gitly, :net_module, Gitly.Utils.Net.INet)
 
       on_exit(fn ->
-        Application.put_env(:gitly_ex, :net_module, previous_net_module)
+        Application.put_env(:gitly, :net_module, previous_net_module)
       end)
     end
 
@@ -39,11 +39,11 @@ defmodule GitlyTaskBuilderTest do
       Mox.stub(Gitly.Utils.NetMock, :is_online?, fn -> false end)
       Mox.stub(Gitly.Utils.NetMock, :is_offline?, fn -> true end)
 
-      previous_net_module = Application.get_env(:gitly_ex, :net_module)
-      Application.put_env(:gitly_ex, :net_module, Gitly.Utils.NetMock)
+      previous_net_module = Application.get_env(:gitly, :net_module)
+      Application.put_env(:gitly, :net_module, Gitly.Utils.NetMock)
 
       on_exit(fn ->
-        Application.put_env(:gitly_ex, :net_module, previous_net_module)
+        Application.put_env(:gitly, :net_module, previous_net_module)
       end)
     end
 

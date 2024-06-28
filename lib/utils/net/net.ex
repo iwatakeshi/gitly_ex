@@ -4,7 +4,7 @@ defmodule Gitly.Utils.Net do
   A module to check if the user is online or offline.
   """
 
-  defp net_module(), do: Application.get_env(:gitly_ex, :net_module) ||
+  defp net_module(), do: Application.get_env(:gitly, :net_module) ||
     raise "No net module configured"
 
   @doc """

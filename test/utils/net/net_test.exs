@@ -20,11 +20,11 @@ defmodule GitlyUtilsNetTest do
 
   describe "actual implementation" do
     setup do
-      previous_net_module = Application.get_env(:gitly_ex, :net_module)
-      Application.put_env(:gitly_ex, :net_module, Gitly.Utils.Net.INet)
+      previous_net_module = Application.get_env(:gitly, :net_module)
+      Application.put_env(:gitly, :net_module, Gitly.Utils.Net.INet)
 
       on_exit(fn ->
-        Application.put_env(:gitly_ex, :net_module, previous_net_module)
+        Application.put_env(:gitly, :net_module, previous_net_module)
       end)
     end
 
