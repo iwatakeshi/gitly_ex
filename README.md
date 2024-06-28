@@ -2,9 +2,7 @@
 
 An Elixir library for easily downloading and extracting Git repositories from various hosting services.
 
-[![codecov](https://codecov.io/gh/iwatakeshi/gitly_ex/graph/badge.svg?token=5XYXSI97PO)](https://codecov.io/gh/iwatakeshi/gitly_ex)
-[![Elixir CI](https://github.com/iwatakeshi/gitly_ex/actions/workflows/elixir.yml/badge.svg)](https://github.com/iwatakeshi/gitly_ex/actions/workflows/elixir.yml)
-[![Hex.pm](https://img.shields.io/hexpm/v/gitly.svg)](https://hex.pm/packages/gitly)
+[![codecov](https://codecov.io/gh/iwatakeshi/gitly_ex/graph/badge.svg?token=5XYXSI97PO)](https://codecov.io/gh/iwatakeshi/gitly_ex) [![Elixir CI](https://github.com/iwatakeshi/gitly_ex/actions/workflows/elixir.yml/badge.svg)](https://github.com/iwatakeshi/gitly_ex/actions/workflows/elixir.yml) [![Hex.pm](https://img.shields.io/hexpm/v/gitly.svg)](https://hex.pm/packages/gitly)
 
 ## Features
 
