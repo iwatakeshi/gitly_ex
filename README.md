@@ -106,6 +106,8 @@ gitly("username/repo", force: true, format: :zip, ref: "main")
 
 For more detailed documentation, run `mix docs` and open `doc/index.html` in your browser.
 
+This project uses [git-cliff](https://github.com/orhun/git-cliff) for changelog generation.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -113,3 +115,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for the latest changes.

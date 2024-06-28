@@ -29,7 +29,7 @@ defmodule Gitly.MixProject do
         main: "readme",
         source_url: @source_url,
         source_ref: "v#{@version}",
-        extras: ["README.md", "LICENSE", "CHANGELOG.md"],
+        extras: ["README.md", "LICENSE", "CHANGELOG.md"]
       ]
     ]
   end
@@ -50,8 +50,7 @@ defmodule Gitly.MixProject do
       {:excoveralls, "~> 0.18.1", only: :test},
       {:plug, "~> 1.16", only: :test},
       {:ex_doc, "~> 0.34.1", only: :dev, runtime: false},
-      {:mix_test_watch, "~> 1.2", only: [:dev, :test], runtime: false},
-      {:git_ops, "~> 2.6.1", only: :dev }
+      {:mix_test_watch, "~> 1.2", only: [:dev, :test], runtime: false}
     ]
   end
 
