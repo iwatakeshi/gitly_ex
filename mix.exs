@@ -3,8 +3,10 @@ defmodule Gitly.MixProject do
 
   def project do
     [
+      name: "Gitly",
       app: :gitly,
       version: "0.1.0",
+      source_url: "https://github.com/iwatakeshi/gitly_ex",
       elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,
@@ -15,7 +17,12 @@ defmodule Gitly.MixProject do
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
-        "coveralls.html": :test
+        "coveralls.html": :test,
+        "test.watch": :test,
+      ],
+      docs: [
+        main: "Gitly",
+        extras: ["README.md", "LICENSE"]
       ]
     ]
   end
