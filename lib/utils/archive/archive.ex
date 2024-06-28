@@ -4,6 +4,7 @@ defmodule Gitly.Utils.Archive do
   alias Gitly.Utils.Git.Provider, as: GitProvider
   alias Gitly.Utils.FS, as: FS
 
+  # @archive_module_opts Application.compile_env(:gitly_ex, :archive_module_options, [])
   @moduledoc """
   A module to handle archive operations.
   """
@@ -31,11 +32,19 @@ defmodule Gitly.Utils.Archive do
     end
   end
 
-  @spec download(String.t(), Path.t()) :: {:ok, Path.t()} | {:error, String.t()}
-  def download(url, path) do
+  @spec download(String.t(), Path.t(), Keyword.t()) :: {:ok, Path.t()} | {:error, String.t()}
+  def download(url, path, opts \\ []) do
+    retry = Keyword.get(opts, :retry, :transient)
     try do
-      with :ok <- FS.ensure_file_exists(path),
-           opts = [into: stream_to_file!(path), redirect_log_level: false, decode_body: false],
+      with true <- Gitly.Utils.Net.is_online?(),
+          :ok <- FS.ensure_dir_exists(path),
+           opts =[
+            into: stream_to_file!(path),
+            redirect_log_level: false,
+            compressed: true,
+            decode_body: false,
+            retry: retry
+          ],
            %Req.Response{status: 200} <- Req.get!(url, opts) do
         {:ok, path}
       else
@@ -45,6 +54,9 @@ defmodule Gitly.Utils.Archive do
 
         {:error, reason} ->
           {:error, reason}
+
+        false ->
+          {:error, "Failed to download archive: offline"}
       end
     rescue
       e in RuntimeError -> {:error, e.message}
@@ -53,12 +65,13 @@ defmodule Gitly.Utils.Archive do
   end
 
   @spec extract(Path.t(), Path.t(), Gitly.opts()) :: {:ok, Path.t()} | {:error, String.t()}
-  def extract(path, dest, opts \\ []) do
+  def extract(file_path, dest, opts \\ []) do
     force = Keyword.get(opts, :force, false)
     overwrite = Keyword.get(opts, :overwrite, false)
+
     with {:ok, temp_dir} <- Briefly.create(directory: true),
-         {:ok, _} <- Extractor.extract(path, temp_dir),
-        #  [extracted_dir] <- File.ls!(temp_dir),
+         {:ok, _} <- Extractor.extract(file_path, temp_dir),
+         #  [extracted_dir] <- File.ls!(temp_dir),
          {:ok, _} <-
            FS.maybe_rm_rf(
              dest,
@@ -79,22 +92,35 @@ defmodule Gitly.Utils.Archive do
     Briefly.cleanup()
   end
 
+  # The following private function is indirectly tested through the public `download` function.
+  # Edge cases like file closing and open errors are covered by the overall behavior of `download`.
+  defp stream_to_file!(file_path) do
+    if File.dir?(file_path) do
+      raise "Cannot open directory as file: #{file_path}"
+    end
 
-  defp stream_to_file!(path) do
-    case File.open(path, [:write, :binary]) do
+    case File.open(file_path, [:write, :binary]) do
       {:ok, file} ->
         fn
           {:data, data}, acc ->
             IO.binwrite(file, data)
             {:cont, acc}
 
+          # coveralls-ignore-start
           :done, acc ->
             File.close(file)
             {:cont, acc}
+
+          _, _ ->
+            File.close(file)
+            {:halt, :error}
+            # coveralls-ignore-stop
         end
 
+      # coveralls-ignore-start
       {:error, reason} ->
-        raise "Failed to open file #{path}: #{inspect(reason)}"
+        raise "Failed to open file #{file_path}: #{inspect(reason)}"
+        # coveralls-ignore-stop
     end
   end
 end

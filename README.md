@@ -1,4 +1,4 @@
-# GitlyEx
+# Gitly
 
 **TODO: Add description**
 

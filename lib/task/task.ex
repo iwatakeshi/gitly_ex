@@ -99,5 +99,5 @@ defmodule Gitly.Task do
   defp handle_error_result(result) when is_list(result), do: result[:error]
   defp handle_error_result(result) when is_tuple(result), do: elem(result, 1)
   defp handle_error_result(:error), do: "Task failed"
-  defp handle_error_result(_), do: "Task failed"
+  # defp handle_error_result(_), do: "Task failed"
 end
