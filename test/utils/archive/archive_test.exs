@@ -1,6 +1,5 @@
 defmodule GitlyUtilsArchiveTest do
   use ExUnit.Case
-  # import Mox
 
   @fixture_dir Path.join(__DIR__, "fixtures")
   @download_dir Path.join(@fixture_dir, "download")
