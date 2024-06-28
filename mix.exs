@@ -23,6 +23,7 @@ defmodule Gitly.MixProject do
         "coveralls.detail": :test,
         "coveralls.post": :test,
         "coveralls.html": :test,
+        "coveralls.json": :test,
         "test.watch": :test
       ],
       docs: [
