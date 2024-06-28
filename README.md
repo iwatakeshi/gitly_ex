@@ -45,6 +45,12 @@ The following inputs are supported:
 - `host.com/owner/repo`
 - `host:owner/repo`
 
+#### Note
+
+`gitly` will return the path that includes the root of the extracted directory.
+If there are more than one folders in the parent directory, then the path to the parent directory would be returned.
+This behavior may change in the future.
+
 ### Download Only
 
 If you only want to download the repository without extracting:
@@ -67,8 +73,12 @@ Or to specify a destination:
 
 ```elixir
 import Gitly, only: [extract: 1, extract: 2]
-{:ok, extracted_path} = extract("/path/to/archive.zip", "/path/to/destination")
+{:ok, _path } = extract("/path/to/archive.zip", "/path/to/destination")
 ```
+
+#### Note
+
+`extract` will return the path that you specified.
 
 ## Options
 
