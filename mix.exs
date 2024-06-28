@@ -10,6 +10,7 @@ defmodule Gitly.MixProject do
       app: :gitly,
       version: @version,
       source_url: @source_url,
+      description: description(),
       elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,
@@ -50,6 +51,10 @@ defmodule Gitly.MixProject do
       {:ex_doc, "~> 0.34.1", only: :dev, runtime: false},
       {:mix_test_watch, "~> 1.2", only: [:dev, :test], runtime: false}
     ]
+  end
+
+  defp description do
+    "An Elixir library for easily downloading and extracting Git repositories from various hosting services."
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
