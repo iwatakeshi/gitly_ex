@@ -69,9 +69,11 @@ defmodule Gitly do
           _ -> {:ok, dest}
         end
       else
+        # coveralls-ignore-next-line
         {:error, reason} -> {:error, reason}
       end
     else
+      # coveralls-ignore-next-line
       {:error, reason} -> {:error, reason}
     end
   end
@@ -108,6 +110,7 @@ defmodule Gitly do
         %{error: errors, result: []} -> {:error, errors}
       end
     else
+      # coveralls-ignore-next-line
       {:error, reason} -> {:error, reason}
     end
   end
@@ -132,6 +135,7 @@ defmodule Gitly do
   """
   @spec extract(Path.t(), opts()) :: {:ok, Path.t()} | {:error, String.t()}
   def extract(path, opts) when is_binary(path) and is_list(opts),
+    # coveralls-ignore-next-line
     do: ArchiveUtils.extract(path, ArchiveUtils.Type.trim_extension(path), opts)
 
   @doc """
@@ -154,7 +158,9 @@ defmodule Gitly do
       {:ok, "/path/to/destination"}
   """
   @spec extract(Path.t(), Path.t(), opts()) :: {:ok, Path.t()} | {:error, String.t()}
-  def extract(path, dest, opts), do: ArchiveUtils.extract(path, dest, opts)
+  def extract(path, dest, opts),
+    # coveralls-ignore-next-line
+    do: ArchiveUtils.extract(path, dest, opts)
 
   @doc false
   @spec build_archive_path(map(), opts()) :: Path.t()

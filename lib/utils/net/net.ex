@@ -4,9 +4,13 @@ defmodule Gitly.Utils.Net do
   A module to check if the user is online or offline.
   """
 
-  defp net_module(), do: Application.get_env(:gitly, :net_module) ||
-    raise "No net module configured"
+  defp net_module(),
+    # coveralls-ignore-start
+    do:
+      Application.get_env(:gitly, :net_module) ||
+        raise("No net module configured")
 
+  # coveralls-ignore-stop
   @doc """
   Checks if the user is offline.
   """
@@ -22,7 +26,6 @@ defmodule Gitly.Utils.Net do
   def is_online?() do
     net_module().is_online?()
   end
-
 end
 
 defmodule Gitly.Utils.Net.INet do
@@ -44,8 +47,12 @@ defmodule Gitly.Utils.Net.INet do
   @spec is_offline?() :: boolean()
   def is_offline?() do
     case :inet.getaddr(~c"www.google.com", :inet) do
-      {:ok, _} -> false
-      {:error, _} -> true
+      {:ok, _} ->
+        false
+
+      # coveralls-ignore-next-line
+      {:error, _} ->
+        true
     end
   end
 

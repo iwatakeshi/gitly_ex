@@ -11,7 +11,7 @@ defmodule GitlyTaskTest do
     task = Gitly.Task.new(:local, fn -> [error: "error"] end)
     assert Gitly.Task.run(task).error == "error"
 
-    task = Gitly.Task.new(:local, fn -> %{ error: "error" } end)
+    task = Gitly.Task.new(:local, fn -> %{error: "error"} end)
     assert Gitly.Task.run(task).error == "error"
   end
 
@@ -39,7 +39,7 @@ defmodule GitlyTaskTest do
     task = Gitly.Task.new(:local, fn -> false end)
     assert task |> Gitly.Task.run() |> Gitly.Task.error?() == false
 
-    task2 = Gitly.Task.new(:local, fn -> {:error, {:not_found, 404} } end)
+    task2 = Gitly.Task.new(:local, fn -> {:error, {:not_found, 404}} end)
     assert task2 |> Gitly.Task.run() |> Gitly.Task.error?() == true
   end
 
@@ -52,26 +52,23 @@ defmodule GitlyTaskTest do
     assert task |> Gitly.Task.run() |> Gitly.Task.success?() == false
   end
 
-
   test "run_all_tasks" do
-    tasks = Gitly.Task.from_list(
-      [
+    tasks =
+      Gitly.Task.from_list(
         one: fn -> 1 end,
-        two: fn -> 2 end,
-      ]
-    )
+        two: fn -> 2 end
+      )
 
     result = Gitly.Task.run_all_tasks(tasks)
 
     assert result == %{error: [], result: [1, 2]}
 
-    tasks = Gitly.Task.from_list(
-      [
+    tasks =
+      Gitly.Task.from_list(
         one: fn -> 1 end,
         two: fn -> {:error, "error"} end,
-        three: fn -> 3 end,
-      ]
-    )
+        three: fn -> 3 end
+      )
 
     result = Gitly.Task.run_all_tasks(tasks)
 
@@ -79,25 +76,23 @@ defmodule GitlyTaskTest do
   end
 
   test "run_until_error" do
-    tasks = Gitly.Task.from_list(
-      [
+    tasks =
+      Gitly.Task.from_list(
         one: fn -> 1 end,
         two: fn -> {:error, "error"} end,
-        three: fn -> 3 end,
-      ]
-    )
+        three: fn -> 3 end
+      )
 
     result = Gitly.Task.run_until_error(tasks)
 
     assert result == %{error: ["error"], result: [1]}
 
-    tasks = Gitly.Task.from_list(
-      [
+    tasks =
+      Gitly.Task.from_list(
         one: fn -> {:error, "error"} end,
         two: fn -> {:error, "error"} end,
-        three: fn -> 3 end,
-      ]
-    )
+        three: fn -> 3 end
+      )
 
     result = Gitly.Task.run_until_error(tasks)
 
@@ -105,25 +100,23 @@ defmodule GitlyTaskTest do
   end
 
   test "run_until_success" do
-    tasks = Gitly.Task.from_list(
-      [
+    tasks =
+      Gitly.Task.from_list(
         one: fn -> 1 end,
         two: fn -> {:error, "error"} end,
-        three: fn -> 3 end,
-      ]
-    )
+        three: fn -> 3 end
+      )
 
     result = Gitly.Task.run_until_success(tasks)
 
     assert result == %{error: [], result: [1]}
 
-    tasks = Gitly.Task.from_list(
-      [
+    tasks =
+      Gitly.Task.from_list(
         one: fn -> {:error, "error"} end,
         two: fn -> {:error, "error"} end,
-        three: fn -> 3 end,
-      ]
-    )
+        three: fn -> 3 end
+      )
 
     result = Gitly.Task.run_until_success(tasks)
 

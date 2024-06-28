@@ -15,6 +15,7 @@ defmodule GitlyUtilsFSTest do
       # Clean up only the directory specific to this test module
       File.rm_rf!(@test_dir)
     end)
+
     :ok
   end
 

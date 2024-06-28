@@ -52,6 +52,7 @@ defmodule GitlyUtilsArchiveTypeTest do
     assert Gitly.Utils.Archive.Type.from_type(:tar_bz2) == ".tar.bz2"
     assert Gitly.Utils.Archive.Type.from_type(:tar_xz) == ".tar.xz"
     assert Gitly.Utils.Archive.Type.from_type(:unknown) == :unknown
+    assert Gitly.Utils.Archive.Type.from_type(:test) == :unknown
   end
 
   test "from_type/2 with dot disabled" do
@@ -83,5 +84,4 @@ defmodule GitlyUtilsArchiveTypeTest do
     assert Gitly.Utils.Archive.Type.trim_extension("file.tar.xz") == "file"
     assert Gitly.Utils.Archive.Type.trim_extension("file") == "file"
   end
-
 end

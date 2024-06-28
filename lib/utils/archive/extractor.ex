@@ -41,7 +41,10 @@ defmodule Gitly.Utils.Archive.Extractor do
   @spec do_extract(ArchiveType.ext(), Path.t(), Path.t()) :: extract_result
   defp do_extract(:zip, path, dest), do: extract_zip(path, dest)
   defp do_extract(:tar, path, dest), do: extract_tar(path, dest, compressed: false)
-  defp do_extract(type, path, dest) when type in [:tar_gz, :tgz], do: extract_tar(path, dest, compressed: true)
+
+  defp do_extract(type, path, dest) when type in [:tar_gz, :tgz],
+    do: extract_tar(path, dest, compressed: true)
+
   defp do_extract(_, _, _), do: {:error, "Unsupported archive type"}
 
   @doc false
@@ -56,7 +59,10 @@ defmodule Gitly.Utils.Archive.Extractor do
   @doc false
   @spec extract_tar(Path.t(), Path.t(), keyword()) :: extract_result
   defp extract_tar(path, dest, opts) do
-    tar_opts = [{:cwd, String.to_charlist(dest)} | if(opts[:compressed], do: [:compressed], else: [])]
+    tar_opts = [
+      {:cwd, String.to_charlist(dest)} | if(opts[:compressed], do: [:compressed], else: [])
+    ]
+
     case :erl_tar.extract(String.to_charlist(path), tar_opts) do
       :ok -> {:ok, dest}
       {:error, reason} -> {:error, "Failed to extract TAR: #{inspect(reason)}"}

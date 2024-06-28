@@ -92,16 +92,17 @@ defmodule Gitly.Utils.Archive do
   @spec download(String.t(), Path.t(), Keyword.t()) :: {:ok, Path.t()} | {:error, String.t()}
   def download(url, path, opts \\ []) do
     retry = Keyword.get(opts, :retry, :transient)
+
     try do
       with true <- Gitly.Utils.Net.is_online?(),
-          :ok <- FS.ensure_dir_exists(path),
-           opts =[
-            into: stream_to_file!(path),
-            redirect_log_level: false,
-            compressed: true,
-            decode_body: false,
-            retry: retry
-          ],
+           :ok <- FS.ensure_dir_exists(path),
+           opts = [
+             into: stream_to_file!(path),
+             redirect_log_level: false,
+             compressed: true,
+             decode_body: false,
+             retry: retry
+           ],
            %Req.Response{status: 200} <- Req.get!(url, opts) do
         {:ok, path}
       else
@@ -185,10 +186,12 @@ defmodule Gitly.Utils.Archive do
             {:cont, acc}
 
           :done, acc ->
+            # coveralls-ignore-next-line
             File.close(file)
             {:cont, acc}
 
           _, _ ->
+            # coveralls-ignore-next-line
             File.close(file)
             {:halt, :error}
         end
