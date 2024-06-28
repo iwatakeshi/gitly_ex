@@ -49,6 +49,15 @@ defmodule GitlyTest do
     test "gitly/2 with non-existent repository returns error" do
       assert {:error, _} = Gitly.gitly("non/existent", root: @gitly_dir)
     end
+
+    test "gitly/3 downloads and extracts a repository using a different ref" do
+      {:ok, path} = Gitly.gitly("iwatakeshi/gitly", ref: "master", root: Path.join(@gitly_dir, ["online", "3"]))
+      assert File.exists?(path)
+      assert File.dir?(path)
+      assert File.exists?(Path.join(path, "README.md"))
+
+      on_exit(fn -> File.rm_rf!(path) end)
+    end
   end
 
   describe "offline" do
