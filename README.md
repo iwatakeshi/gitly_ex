@@ -48,7 +48,7 @@ The following inputs are supported:
 #### Note
 
 `gitly` will return the path that includes the root of the extracted directory.
-If there are more than one folders in the parent directory, then the path to the parent directory would be returned.
+If there are more than one folder in the parent directory, then the path to the parent directory would be returned.
 This behavior may change in the future.
 
 ### Download Only
@@ -57,7 +57,7 @@ If you only want to download the repository without extracting:
 
 ```elixir
 import Gitly, only: [download: 1, download: 2]
-{:ok, archive_path} = download("username/repo")
+{:ok, _path} = download("username/repo")
 ```
 
 ### Extract an Existing Archive
@@ -66,7 +66,7 @@ To extract an already downloaded archive:
 
 ```elixir
 import Gitly, only: [extract: 1, extract: 2]
-{:ok, extracted_path} = extract("/path/to/archive.zip")
+{:ok, _path } = extract("/path/to/archive.zip")
 ```
 
 Or to specify a destination:
